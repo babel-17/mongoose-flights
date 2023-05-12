@@ -7,6 +7,7 @@ const flightsCtrl = require('../controllers/flights');
 router.get('/', flightsCtrl.index);
 // GET /flights/new
 router.get('/new', flightsCtrl.new);
-
+// GET	/posts/:id 'show'(details)
+router.get('/:id', flightsCtrl.show);
 
 module.exports = router;

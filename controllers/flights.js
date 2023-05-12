@@ -7,7 +7,7 @@ module.exports = {
 };
 
 function newFlight(req, res) {
-    res.render('flights/new', errorMsg: ''} );
+    res.render('flights/new', {errorMsg: ''});
 }
 
 async function create(req, res) {
