@@ -1,60 +1,68 @@
 <%- include('../partials/header') %>
 
-
-
+<body>
 <section id="show-page">
-    <div>Airline </div>
-    <div><%= flight.airline %></div>
-    <div>Airport </div>
-    <div><%= flight.airport %></div>
-    <div>Flight No: </div>
-    <div><%= flight.flightNo %></div>
-    <div>Departs: </div>
-    <div><%= flight.departs %></div>
-  <a href="/flights/<%= flight._id %>/tickets/new">
-    <button>Add Ticket</button>
-  </a>
-  
-  </section>
-  <tr id="show-page">
-    <% tickets.forEach(function(t) { %>
-      <strong><td>Seats </td></strong> 
-      <td><%= t.seat %></td>
-      <strong><td>Price </td></strong>
-      <td><%= t.price %></td>
-      <% }) %>
-  </tr>
-
-  
-  
+  <div>Airport: </div>
+  <div><%= flight.airport %></div>
+  <div>Airline: </div>
+  <div><%= flight.airline %></div>
+  <div>Flight Number: </div>
+  <div><%= flight.flightNo %></div>
+  <div>Departs: </div>
+  <div><%= flight.departs %></div>
 </section>
-<!-- new markup below -->
-<br><br><h2>Destinations</h2>
-<form id="add-destination" method="POST"
-action="/flights/<%= flight._id %>/destination">
-<label>Airport:
-  <select name="airport">
-    <option value="LAX">LAX</option>
-    <option value="AUS">AUS</option>
-    <option value="DFW">DFW</option>
-    <option value="DEN">DEN</option>
-    <option value="SAN">SAN</option>
-  </select>
-</label>
-<label>Arrival:
-  <input type="datetime-local" name="arrival"> 
-</label>
-  <input type="submit" value="Add Destination">
-</form>
-
-
 <br>
-<tr id="show-page">
-  <% flight.destinations.forEach(function(f) { %>
-    <br>
-    <strong><td>Airport: </td></strong> 
-    <td><%= f.airport %></td>
-    <strong><td>Arrival: </td></strong>
-    <td><%= f.arrival %></td>
-    <% }) %>
-</tr>
+<h2><strong>Destinations</strong></h2>
+<form id="add-destination-form" method="POST" action="/flights/<%= flight._id %>/destinations">
+  <label>Destination:
+    <select name="airport" >
+        <option value="LAX">LAX</option>
+        <option value="SFO">SFO</option>
+        <option value="IAD">IAD</option>
+        <option value="BOS">BOS</option>
+    </select>
+  </label>
+  <label>Arrival:
+    <input type="datetime-local" name="arrival"> 
+  </label>
+    <input type="submit" value="Add Destination">
+    <section id="show-page">
+      <% flight.destinations.forEach(function(f) { %>
+        <div>Airport</div>
+        <div><%= f.airport %></div>
+        <div>Arrival</div>
+        <div><%= f.arrival %></div>
+      <% }) %>
+    </section>
+</form>
+<br>
+<h2><strong>Tickets</strong></h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Seat</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% tickets.forEach(function(t) { %>
+        <tr>
+          <td><%= t.seat %></td>
+          <td><%= t.price %></td>
+        </tr>
+        <% }) %>
+    </tbody>
+  </table>
+  <h3>Enter a New Ticket</h3>
+    <form action="/flights/<%= flight._id %>/ticket" method="POST">
+      <label>Seat:
+        <input type="string" name="seat" required pattern="[A-F][1-9]\d?">
+      </label><br>
+      <label>Price:
+        <input type="number" name="price">
+      </label><br>
+        <button type="submit">New Ticket</button>
+    </form>
+</body>
+
+<%- include('../partials/footer') %>
